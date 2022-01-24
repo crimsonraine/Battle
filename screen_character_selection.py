@@ -62,6 +62,14 @@ class Screen_CharacterSelection (tk.Frame):
             tk.Label(self, text=str(self.roster.character_list[c].dexterity), font=("Times New Roman", 12)).grid(row=c+1,column=3,sticky=tk.N, padx=(5,5))
             tk.Label(self, text=str(self.roster.character_list[c].strength), font=("Times New Roman", 12)).grid(row=c+1,column=4,sticky=tk.N, padx=(5,5))
 
+            # loop through characters
+            for char in self.roster.character_list:
+                tk.Radiobutton(self,
+                text = self.roster.character_list[c].name,
+                variable = self.character_index,
+                value = self.roster.character_list[c],
+                command = self.update_text
+                ).grid(row = 2, column = 0, sticky = tk.W)
 
         
 
