@@ -44,35 +44,35 @@ class Screen_CharacterSelection (tk.Frame):
         self.character_index = tk.StringVar() # already put in
         self.character_index.set(None) # already put in
         # labels
-        tk.Label(self, text="Hit Points", font=("Times New Roman", 12)).grid(row=0,column=2,sticky=tk.N, padx=(5,5))
-        tk.Label(self, text="Dexterity", font=("Times New Roman", 12)).grid(row=0,column=3,sticky=tk.N, padx=(5,5))
-        tk.Label(self, text="Strength", font=("Times New Roman", 12)).grid(row=0,column=4,sticky=tk.N, padx=(5,5))
+        tk.Label(self, text="Hit Points", font=("Times New Roman", 12)).grid(row=0,column=3,sticky=tk.N, padx=(5,5))
+        tk.Label(self, text="Dexterity", font=("Times New Roman", 12)).grid(row=0,column=4,sticky=tk.N, padx=(5,5))
+        tk.Label(self, text="Strength", font=("Times New Roman", 12)).grid(row=0,column=5,sticky=tk.N, padx=(5,5))
         
-        for c in range(len(self.roster.character_list)):
+        for c_i in range(len(self.roster.character_list)):# by indexes
             # radiobutton
+            char = self.roster.character_list[c_i]
             tk.Radiobutton(self,
-            text = self.roster.character_list[c].name,
-            variable = self.character_index,
-            value = self.roster.character_list[c],
-            command = self.update_text
-            ).grid(row = 2, column = 0, sticky = tk.W)
-
-            # attributes
-            tk.Label(self, text=str(self.roster.character_list[c].hit_points), font=("Times New Roman", 12)).grid(row=c+1,column=2,sticky=tk.N, padx=(5,5))
-            tk.Label(self, text=str(self.roster.character_list[c].dexterity), font=("Times New Roman", 12)).grid(row=c+1,column=3,sticky=tk.N, padx=(5,5))
-            tk.Label(self, text=str(self.roster.character_list[c].strength), font=("Times New Roman", 12)).grid(row=c+1,column=4,sticky=tk.N, padx=(5,5))
-
-            # loop through characters
-            for char in self.roster.character_list:
-                tk.Radiobutton(self,
-                text = self.roster.character_list[c].name,
+                text = char.name,
                 variable = self.character_index,
-                value = self.roster.character_list[c],
-                command = self.update_text
-                ).grid(row = 2, column = 0, sticky = tk.W)
+                value = c_i,
+                command = self.character_index.set(c_i)
+                ).grid(row = c_i + 1, column = 0, sticky = tk.W) # set position
 
-        
+            # name
+            tk.Label(self, text=char.name, font=("Times New Roman", 12)).grid(row=c_i + 1,column=1,sticky=tk.N, padx=(5,5))
+            
+            # image
+            imageSmall = tk.PhotoImage(file="images/" + char.small_image);
+            w= tk.Label (self, image = imageSmall)
+            w.photo = imageSmall
+            w.grid(row = c_i, column = 2, sticky = tk.N)
+            
+            tk.Label(self, text=char.hit_points, font=("Times New Roman", 12)).grid(row=c_i + 1,column=3,sticky=tk.N, padx=(5,5))
+            tk.Label(self, text=char.dexterity, font=("Times New Roman", 12)).grid(row=c_i + 1,column=4,sticky=tk.N, padx=(5,5))
+            tk.Label(self, text=char.strength, font=("Times New Roman", 12)).grid(row=c_i + 1,column=5,sticky=tk.N, padx=(5,5))
 
+        # character selected button
+        char_select_button = tk.Button()
         
 
        
