@@ -43,40 +43,43 @@ class Screen_CharacterSelection (tk.Frame):
 
         self.character_index = tk.StringVar() # already put in
         self.character_index.set(None) # already put in
+
         # labels
         tk.Label(self, text="Hit Points", font=("Times New Roman", 12)).grid(row=0,column=3,sticky=tk.N, padx=(5,5))
         tk.Label(self, text="Dexterity", font=("Times New Roman", 12)).grid(row=0,column=4,sticky=tk.N, padx=(5,5))
         tk.Label(self, text="Strength", font=("Times New Roman", 12)).grid(row=0,column=5,sticky=tk.N, padx=(5,5))
         
         for c_i in range(len(self.roster.character_list)):# by indexes
-            # radiobutton
             char = self.roster.character_list[c_i]
             tk.Radiobutton(self,
-                text = char.name,
+                #text = char.name,
                 variable = self.character_index,
                 value = c_i,
-                command = self.character_index.set(c_i)
                 ).grid(row = c_i + 1, column = 0, sticky = tk.W) # set position
 
             # name
-            tk.Label(self, text=char.name, font=("Times New Roman", 12)).grid(row=c_i + 1,column=1,sticky=tk.N, padx=(5,5))
+            tk.Label(self, text=char.name, font=("Times New Roman", 12)).grid(row=c_i + 1,column=1,sticky=tk.N + tk.S, padx=(5,5))
             
             # image
             imageSmall = tk.PhotoImage(file="images/" + char.small_image);
             w= tk.Label (self, image = imageSmall)
             w.photo = imageSmall
-            w.grid(row = c_i, column = 2, sticky = tk.N)
+            w.grid(row = c_i + 1, column = 2, sticky = tk.N)
             
-            tk.Label(self, text=char.hit_points, font=("Times New Roman", 12)).grid(row=c_i + 1,column=3,sticky=tk.N, padx=(5,5))
-            tk.Label(self, text=char.dexterity, font=("Times New Roman", 12)).grid(row=c_i + 1,column=4,sticky=tk.N, padx=(5,5))
-            tk.Label(self, text=char.strength, font=("Times New Roman", 12)).grid(row=c_i + 1,column=5,sticky=tk.N, padx=(5,5))
+            # stats
+            tk.Label(self, text=char.hit_points, font=("Times New Roman", 12)).grid(row=c_i + 1,column=3,sticky=tk.N + tk.S, padx=(5,5))
+            tk.Label(self, text=char.dexterity, font=("Times New Roman", 12)).grid(row=c_i + 1,column=4,sticky=tk.N + tk.S, padx=(5,5))
+            tk.Label(self, text=char.strength, font=("Times New Roman", 12)).grid(row=c_i + 1,column=5,sticky=tk.N + tk.S, padx=(5,5))
 
         # character selected button
-        char_select_button = tk.Button()
+        self.char_select_button = tk.Button(self, text = "Character Selected!", bg = 'black', fg = 'red')
+        self.char_select_button["command"] = self.selected_clicked
+
+        self.char_select_button.grid(row=len(self.roster.character_list) + 1, column = 4, columnspan = 2, sticky = tk.E) 
         
 
        
- 
+
     def selected_clicked(self):
         ''' This method is to be called when the "Character Selected!" button is clicked. 
             Notice that it passes self.character_index back to the callback method. '''         
